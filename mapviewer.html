@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+    <title>VisioGeoJSON-UIkit</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../media/favicon.png" />
+    
+    <!-- UIkit JS/CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/css/uikit.min.css" />
+
+    <!-- lodash -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <link rel="stylesheet" href="css/visioglobe-icon.css"/>
+    <link rel="stylesheet" href="css/uikit.visioglobe.css"/>
+	<script type="module" src="js/mapviewer.js"></script>
+</head>
+<body>
+    <!-- toolbar -->
+    <nav class="uk-navbar-container" uk-navbar>
+        <div class="uk-navbar-left">
+            <ul class="uk-navbar-nav">
+                <li id="global_button">
+                    <a href="#">
+                        <div class="uk-icon-button visioglobe-icon visio-global" style="font-size: 24px"></div>
+                    </a>
+                </li>
+                <li id="building_selector">
+                    <a href="#">
+                        <div class="uk-icon visioglobe-icon visio-building" style="font-size: 24px"></div>
+                        <span id="buildingName" style="padding-left: 8px;"></span>
+                    </a>
+                    <div id="buildings" class="uk-navbar-dropdown uk-padding-small uk-margin-remove">
+                        <ul class="uk-nav uk-navbar-dropdown-nav"></ul>
+                    </div>
+                </li>
+                <li id="floor_selector">
+                    <a href="#">
+                        <div class="uk-icon visioglobe-icon visio-floor" style="font-size: 24px"></div>
+                        <span id="floorName" style="padding-left: 8px;"></span>
+                    </a>
+                    <div id="floors" class="uk-navbar-dropdown uk-padding-small uk-margin-remove">
+                        <ul class="uk-nav uk-navbar-dropdown-nav"></ul>
+                    </div>
+                </li>
+                <li id="mode_selector">
+                    <a href="#">
+                        <span uk-icon="icon: settings"></span>
+                        <span id="modeName" style="padding-left: 8px;"></span>
+                    </a>
+                    <div id="modes" class="uk-navbar-dropdown uk-padding-small uk-margin-remove">
+                        <ul class="uk-nav uk-navbar-dropdown-nav"></ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="uk-navbar-right">
+            <a class="uk-navbar-toggle uk-padding uk-padding-remove-vertical" uk-search-icon uk-toggle="target: #searchPanel"></a>
+        </div>
+    </nav>
+    <!-- mapviewer's container -->
+    <div id="container" class="uk-container uk-container-expand uk-position-relative uk-padding-remove" uk-height-viewport="expand:true">
+    </div>
+    <!-- search panel -->
+    <div id="searchPanel" uk-offcanvas="flip:true;overlay:false;" class="uk-width-1-3">
+        <div class="uk-offcanvas-bar uk-width-1-1 uk-background-default uk-overflow-hidden uk-flex uk-flex-column">
+            <a id="closePanel" href="#" class="uk-icon-button uk-float-left" uk-icon="chevron-right" style="font-size: 24px; min-height: 36px;"></a>
+            <div class="uk-margin-medium uk-margin-remove-bottom uk-flex uk-flex-middle">
+                <form class="uk-search uk-search-default uk-width-expand" autocomplete="off">
+                    <span class="uk-search-icon-flip" uk-search-icon></span>
+                    <input id="searchInput" class="uk-search-input" type="search" placeholder="Search">
+                </form>
+                <a id="clearSearch" href="#" class="uk-padding-small" uk-icon="close" style="font-size: 24px;"></a>
+            </div>
+            <ul id="searchTabs" class="uk-flex-center" uk-tab>
+                <li class="uk-active">
+                    <a href="#">
+                        <span id="categoriesTabName"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span id="placesTabName"></span>
+                        <span id="resetCategory" uk-icon="icon: close" style="width: 16px; display: none;"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="uk-switcher" style="overflow-y: auto;">
+                <ul id="categoryList" class="uk-list uk-margin-remove">
+                </ul>
+                <ul id="placeList" class="uk-list uk-margin-remove">
+                </ul>
+            </ul>
+        </div>
+    </div>
+    <!-- spinner -->
+    <div id="spinner" class="uk-overlay uk-position-center">
+        <div uk-spinner="ratio: 5"></div>
+    </div>
+</body>
+</html>
